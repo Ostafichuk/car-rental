@@ -1,0 +1,50 @@
+services:
+  # 1. Наша нова база даних PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: luxedrive-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rootpassword
+      POSTGRES_DB: luxedrive
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Це збереже дані навіть після видалення контейнера
+
+  # 2. Наш Node.js сервер
+  backend:
+    build:
+      context: ./car-rental-api
+      dockerfile: Dockerfile
+    container_name: luxedrive-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      # Вказуємо бекенду, як підключитися до БД (використовуємо ім'я сервісу 'db')
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=luxedrive
+    depends_on:
+      - db
+    restart: always
+
+  # 3. Наш React фронтенд (Nginx)
+  frontend:
+    build:
+      context: ./car-rental
+      dockerfile: Dockerfile
+    container_name: luxedrive-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+
+# Реєструємо volume для збереження даних бази
+volumes:
+  pgdata:

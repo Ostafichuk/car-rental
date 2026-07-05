@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import CarDetails from './pages/CarDetails';
 import CategoryPage from './pages/CategoryPage';
 import BrandPage from './pages/BrandPage';
+import CatalogPage from './pages/CatalogPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/car/:id" element={<CarDetails />} />
             <Route path="/category/:categoryName" element={<CategoryPage />} />
             <Route path="/brand/:brandName" element={<BrandPage />} />
+            <Route path="/catalog" element={<CatalogPage />} />
           </Routes>
         </div>
 

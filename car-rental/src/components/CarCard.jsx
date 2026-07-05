@@ -1,22 +1,38 @@
 import { Link } from 'react-router-dom';
 
 export default function CarCard({ car }) {
+  const features = {
+    mileage: '4,000',
+    transmission: 'Auto',
+    seats: '4 Person',
+    fuel: 'Electric',
+  };
+
+  const handleImageError = (e) => {
+    e.target.src =
+      'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=600';
+  };
+
   return (
-    <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-sm hover:shadow-xl transition-shadow flex flex-col">
-      <div className="w-full h-48 mb-4 rounded-2xl overflow-hidden bg-gray-100">
-        <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
+    <div className="bg-white rounded-3xl p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-transparent hover:border-gray-900 hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+      <div className="w-full aspect-4/3 bg-gray-100 rounded-2xl mb-5 overflow-hidden">
+        <img
+          src={car.image}
+          alt={car.name}
+          onError={handleImageError}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
       </div>
 
-      <div className="mb-4">
-        <h3 className="text-lg font-bold text-gray-900 mb-1">{car.name}</h3>
-        <div className="flex items-baseline gap-1">
-          <span className="text-2xl font-extrabold text-gray-900">{car.price}</span>
-          <span className="text-sm text-gray-500">/day</span>
-        </div>
+      <h3 className="text-[18px] font-bold text-gray-900 mb-1 line-clamp-1">{car.name}</h3>
+
+      <div className="flex items-baseline gap-1 mb-5">
+        <span className="text-[28px] font-extrabold text-gray-900">{car.price}</span>
+        <span className="text-[14px] font-medium text-gray-500">/day</span>
       </div>
 
-      <div className="grid grid-cols-4 gap-2 bg-gray-50 rounded-2xl p-3 mb-6">
-        <div className="flex flex-col items-center justify-center gap-1">
+      <div className="flex justify-between items-center bg-[#F7F7F9] rounded-2xl py-4 px-4 mb-6 mt-auto">
+        <div className="flex flex-col items-center gap-1.5">
           <svg
             className="w-5 h-5 text-gray-500"
             fill="none"
@@ -30,9 +46,10 @@ export default function CarCard({ car }) {
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
             ></path>
           </svg>
-          <span className="text-[10px] text-gray-600 font-medium">{car.mileage}</span>
+          <span className="text-[11px] text-gray-500 font-semibold">{features.mileage}</span>
         </div>
-        <div className="flex flex-col items-center justify-center gap-1">
+
+        <div className="flex flex-col items-center gap-1.5">
           <svg
             className="w-5 h-5 text-gray-500"
             fill="none"
@@ -52,9 +69,10 @@ export default function CarCard({ car }) {
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             ></path>
           </svg>
-          <span className="text-[10px] text-gray-600 font-medium">{car.transmission}</span>
+          <span className="text-[11px] text-gray-500 font-semibold">{features.transmission}</span>
         </div>
-        <div className="flex flex-col items-center justify-center gap-1">
+
+        <div className="flex flex-col items-center gap-1.5">
           <svg
             className="w-5 h-5 text-gray-500"
             fill="none"
@@ -65,12 +83,13 @@ export default function CarCard({ car }) {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="1.5"
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
             ></path>
           </svg>
-          <span className="text-[10px] text-gray-600 font-medium">{car.seats} Person</span>
+          <span className="text-[11px] text-gray-500 font-semibold">{features.seats}</span>
         </div>
-        <div className="flex flex-col items-center justify-center gap-1">
+
+        <div className="flex flex-col items-center gap-1.5">
           <svg
             className="w-5 h-5 text-gray-500"
             fill="none"
@@ -84,13 +103,13 @@ export default function CarCard({ car }) {
               d="M13 10V3L4 14h7v7l9-11h-7z"
             ></path>
           </svg>
-          <span className="text-[10px] text-gray-600 font-medium">{car.fuel}</span>
+          <span className="text-[11px] text-gray-500 font-semibold">{features.fuel}</span>
         </div>
       </div>
 
       <Link
         to={`/car/${car.id}`}
-        className="mt-auto w-full py-3 rounded-full border border-gray-900 text-sm font-semibold text-gray-900 hover:bg-gray-900 hover:text-white transition-colors text-center block"
+        className="w-full py-3.5 flex justify-center rounded-full border border-gray-300 text-[14px] text-gray-900 font-bold group-hover:bg-gray-900 group-hover:text-white group-hover:border-gray-900 transition-all duration-300"
       >
         Rent Now
       </Link>

@@ -26,3 +26,25 @@ jobs:
         run: |
           npm ci
           npm run build
+
+      # Налаштовуємо інструмент для збірки Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Перевіряємо збірку фронтенду
+      - name: Build Frontend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./car-rental
+          file: ./car-rental/Dockerfile
+          push: false
+          tags: luxedrive-frontend:latest
+
+      # Перевіряємо збірку бекенду
+      - name: Build Backend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./car-rental-api
+          file: ./car-rental-api/Dockerfile
+          push: false
+          tags: luxedrive-backend:latest
